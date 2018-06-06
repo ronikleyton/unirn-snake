@@ -163,7 +163,6 @@ def iniciar():
     while not morto:
 
         fundoJanela.blit(fundodojogo, (0, 0))
-
         if pontos < 50:
             cordacobra = noob
         if pontos > 50 and pontos <120:
@@ -287,6 +286,8 @@ def iniciar():
         mainClock.tick(9)  # FPS
     return pontos
 
+#tela do gameover
+
 def gameover():
     COMPRIMENTOJANELA = 440
     ALTURAJANELA = 510
@@ -304,6 +305,8 @@ def gameover():
         pygame.display.update()
         time.sleep(3)
         running = False
+
+#creditos
 def developers():
     print(BY)
     print(VER)
