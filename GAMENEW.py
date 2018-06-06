@@ -4,8 +4,8 @@ from pygame.locals import *
 from random import randint
 import time
 
-__BY__= 'Feito por : Roni And Bruno'
-__VER__= 'Version: 1.2'
+BY= 'Feito por : Roni And Bruno'
+VER= 'Version: 1.2'
 #Audio
 pygame.mixer.init()
 derrota = pygame.mixer.Sound('audios/morte.wav')
@@ -15,7 +15,7 @@ clique = pygame.mixer.Sound('audios/clique.wav')
 def audios():
     musicas = ['audios/Tetris.ogg','audios/musica2.ogg']
     pygame.mixer.music.load(musicas[randint(0,1)])
-    pygame.mixer.music.play()
+    pygame.mixer.music.play(loops=20)
 
     pygame.mixer.music.set_volume(0.5)
 
@@ -87,7 +87,6 @@ def MenuInicial():
         if verificaMouse(botaoMuteoff, posBotaoMuteoff, xy) == True:
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 audios()
-                pygame.mixer.music.play()
                 clique.play()
                 muteonoff = 0
         if verificaMouse(botaoExit, posBotaoExit, xy) == True:
@@ -101,8 +100,13 @@ def MenuInicial():
 
 def iniciar():
     # Cores
-    AZUL = (0, 0, 255)
+    corcomida = (255, 0, 0)
+    cordacobra = (randint(0,255),randint(0,255), randint(0,255))
 
+    noob = (0,0,0)
+    amador = (0,0,255)
+    experiente = (255,0,255)
+    pro = (255, 0, 0)
 
 
     # Tamanho da janela
@@ -157,7 +161,18 @@ def iniciar():
     mainClock = pygame.time.Clock()
 
     while not morto:
+
         fundoJanela.blit(fundodojogo, (0, 0))
+
+        if pontos < 50:
+            cordacobra = noob
+        if pontos > 50 and pontos <120:
+            cordacobra = amador
+        if pontos > 120 and pontos <150:
+            cordacobra = experiente
+        if pontos > 150:
+            cordacobra = pro
+
         # Vemos se o evento QUIT ocorreu
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -226,6 +241,7 @@ def iniciar():
                 y1 = randint(0, 17)
                 comidaXY = [int(x1 * 20) + 10, int(y1 * 20) + 120]
                 if snake.count(comidaXY) == 0:
+                    corcomida = (255, 0, 0)
                     comida = 1
                     break
 
@@ -237,6 +253,7 @@ def iniciar():
             comeu.play()
             comida = 0
             pontos += 5
+
         else:
             # remove a cauda
             snake.pop()
@@ -249,10 +266,10 @@ def iniciar():
 
         # Texto
         font = pygame.font.Font(None, 36)
-        text = font.render("Score: " + str(pontos), 1, (200, 200, 200))
+        text = font.render("Score: " + str(pontos), 1, (0, 0, 0))
         textpos = text.get_rect()
-        textpos.left = 75
-        textpos.top = 45
+        textpos.left = 20
+        textpos.top = 50
         fundoJanela.blit(text, textpos)
 
         # Fundo jogo
@@ -260,10 +277,10 @@ def iniciar():
 
         # desenha a serpente
         for x in snake:
-            pygame.draw.rect(fundoJanela, AZUL, Rect(x, bloco))
+            pygame.draw.rect(fundoJanela, cordacobra, Rect(x, bloco))
 
         # desenha a comida
-        pygame.draw.rect(fundoJanela, (100, 100, 100), Rect(comidaXY, bloco))
+        pygame.draw.rect(fundoJanela, (corcomida), Rect(comidaXY, bloco))
 
         # desenha os objectos no ecra
         pygame.display.update()
@@ -288,8 +305,7 @@ def gameover():
         time.sleep(3)
         running = False
 def developers():
-    print(__BY__)
-    print(__VER__)
+    print(BY)
+    print(VER)
 
 MenuInicial()
-
