@@ -8,12 +8,16 @@ __BY__= 'Feito por : Roni And Bruno'
 __VER__= 'Version: 1.2'
 #Audio
 pygame.mixer.init()
-pygame.mixer.music.load('audios/Tetris.ogg')
-pygame.mixer.music.play()
 derrota = pygame.mixer.Sound('audios/morte.wav')
 comeu = pygame.mixer.Sound('audios/comeu.wav')
 clique = pygame.mixer.Sound('audios/clique.wav')
-pygame.mixer.music.set_volume(0.5)
+
+def audios():
+    musicas = ['audios/Tetris.ogg','audios/musica2.ogg']
+    pygame.mixer.music.load(musicas[randint(0,1)])
+    pygame.mixer.music.play()
+
+    pygame.mixer.music.set_volume(0.5)
 
 
 def verificaMouse(img_botao,pos_botao,pos_mouse):
@@ -26,6 +30,7 @@ def verificaMouse(img_botao,pos_botao,pos_mouse):
     return False
 
 def MenuInicial():
+    audios()
     display_surf = pygame.display.set_mode((440, 510), pygame.HWSURFACE)
     pygame.display.set_caption('SNAKE UNI-RN')
     botaoNovoJogo = pygame.image.load("imagens/start.png").convert()
@@ -81,6 +86,7 @@ def MenuInicial():
                 muteonoff = 1
         if verificaMouse(botaoMuteoff, posBotaoMuteoff, xy) == True:
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                audios()
                 pygame.mixer.music.play()
                 clique.play()
                 muteonoff = 0
