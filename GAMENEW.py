@@ -5,7 +5,7 @@ from random import randint
 import time
 
 BY= 'Feito por : Roni And Bruno'
-VER= 'Version: 1.2'
+VER= 'Version: 1.5'
 #Audio
 pygame.mixer.init()
 derrota = pygame.mixer.Sound('audios/morte.wav')
