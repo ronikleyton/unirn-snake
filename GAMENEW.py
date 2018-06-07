@@ -4,17 +4,18 @@ from pygame.locals import *
 from random import randint
 import time
 
-BY= 'Feito por : Roni And Bruno'
-VER= 'Version: 1.5'
+_BY_= 'Ronikleyton & Bruno'
+_VER_= 'Version: 1.2'
 #Audio
 pygame.mixer.init()
 derrota = pygame.mixer.Sound('audios/morte.wav')
 comeu = pygame.mixer.Sound('audios/comeu.wav')
 clique = pygame.mixer.Sound('audios/clique.wav')
 
+
 def audios():
-    musicas = ['audios/Tetris.ogg','audios/musica2.ogg']
-    pygame.mixer.music.load(musicas[randint(0,1)])
+    musicas = ['audios/Tetris.ogg', 'audios/musica2.ogg']
+    pygame.mixer.music.load(musicas[randint(0, 1)])
     pygame.mixer.music.play(loops=20)
 
     pygame.mixer.music.set_volume(0.5)
@@ -29,10 +30,11 @@ def verificaMouse(img_botao,pos_botao,pos_mouse):
         return True
     return False
 
+
 def MenuInicial():
     audios()
-    display_surf = pygame.display.set_mode((440, 510), pygame.HWSURFACE)
-    pygame.display.set_caption('SNAKE UNI-RN')
+    tela_menu = pygame.display.set_mode((440, 510), pygame.HWSURFACE)
+    pygame.display.set_caption('Game project UNI-RN')
     botaoNovoJogo = pygame.image.load("imagens/start.png").convert()
     botaoMuteoff = pygame.image.load("imagens/muteoff.png").convert()
     botaoMuteon = pygame.image.load("imagens/muteon.png").convert()
@@ -61,19 +63,19 @@ def MenuInicial():
 
         xy = pygame.mouse.get_pos()  # retorna a posicao do mouse
 
-        display_surf.blit(fundo, (0, 0))
+        tela_menu.blit(fundo, (0, 0))
 
         fonte = pygame.font.Font(None,36)
         texto = fonte.render(str(recorde), 1, (200, 200, 200))
         textpos = texto.get_rect()
         textpos.left = 55
         textpos.top = 35
-        display_surf.blit(texto, textpos)
+        tela_menu.blit(texto, textpos)
         #Função Mute
         if muteonoff == 0:
-            display_surf.blit(botaoMuteon, posBotaoMuteon)
+            tela_menu.blit(botaoMuteon, posBotaoMuteon)
         if muteonoff == 1:
-            display_surf.blit(botaoMuteoff, posBotaoMuteoff)
+            tela_menu.blit(botaoMuteoff, posBotaoMuteoff)
         if verificaMouse(botaoNovoJogo, posBotaoNovoJogo, xy) == True:
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 clique.play()
@@ -97,11 +99,10 @@ def MenuInicial():
         pygame.display.flip()
 
 
-
 def iniciar():
     # Cores
     corcomida = (255, 0, 0)
-    cordacobra = (randint(0,255),randint(0,255), randint(0,255))
+    cordacobra = (randint(0, 255), randint(0, 255), randint(0, 255))
 
     noob = (0,0,0)
     amador = (0,0,255)
@@ -163,13 +164,14 @@ def iniciar():
     while not morto:
 
         fundoJanela.blit(fundodojogo, (0, 0))
-        if pontos < 50:
+
+        if pontos < 100:
             cordacobra = noob
-        if pontos > 50 and pontos <120:
+        if pontos > 100 and pontos <301:
             cordacobra = amador
-        if pontos > 120 and pontos <150:
+        if pontos > 301 and pontos <501:
             cordacobra = experiente
-        if pontos > 150:
+        if pontos > 501:
             cordacobra = pro
 
         # Vemos se o evento QUIT ocorreu
@@ -286,7 +288,6 @@ def iniciar():
         mainClock.tick(9)  # FPS
     return pontos
 
-#tela do gameover
 
 def gameover():
     COMPRIMENTOJANELA = 440
@@ -306,9 +307,9 @@ def gameover():
         time.sleep(3)
         running = False
 
-#creditos
+
 def developers():
-    print(BY)
-    print(VER)
+    print(_BY_)
+    print(_VER_)
 
 MenuInicial()
